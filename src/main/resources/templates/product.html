@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>List product</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Product management</h1>
+      <a class="btn btn-primary" href="/" role="button">Home</a>
+      <form th:action="@{/logout}" method="post">
+        <input type="submit" class="btn btn-success" value="Logout">
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-5">
+      <a class="btn btn-primary" href="/product/new" role="button">Create new product</a>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mt-1">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Date Of Manf</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products.content}">
+          <td th:text="${product.id}" />
+          <td th:text="${product.name}" />
+          <td th:text="${product.description}" />
+          <td th:text="${product.price}" />
+          <td th:text="${product.dateOfManf}" />
+          <td>
+            <a class="btn btn-primary" th:href="'/product/edit/' + ${product.id}" role="button">Edit</a>
+            <a class="btn btn-danger" th:href="'/product/delete/' + ${product.id}" role="button">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="Page navigation example" th:if="${products.totalPages > 1}">
+        <ul class="pagination">
+          <li class="page-item"
+              th:classappend="${pageNumber==products.number + 1} ? active"
+              th:each="pageNumber : ${pageNumbers}">
+            <a class="page-link" href="#"
+               th:href="@{/product(size=${products.size}, page=${pageNumber})}"
+               th:text="${pageNumber}"
+            />
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
